@@ -14,23 +14,88 @@ export const productApi = createApi({
     getProducts: builder.query({
       query: (query) => ({
         url: '/',
+        method: 'GET',
+      }),
+      providesTags: ['Product']
+    }),
+
+    searchProducts: builder.query({
+      query: (query) => ({
+        url: '/',
+        params: {
+          search: query
+        },
         method: 'GET'
-      })
+      }),
+      providesTags: ['Product']
     }),
 
     getTopProducts: builder.query({
       query: () => ({
         url: '/top_products',
         method: 'GET'
-      })
+      }),
+      providesTags: ['Product']
     }),
 
     getProductById: builder.query({
       query: (query) => ({
         url: `/${query}`,
         method: 'GET'
-      })
+      }),
+      providesTags: ['Product']
     }),
+
+    updateProduct: builder.mutation({
+      query: (query) => ({
+        url: `/${query.id}`,
+        body: query.body,
+        method: 'PATCH',
+        headers: {
+          Authorization: query.token
+        }
+      }),
+      invalidatesTags: ['Product']
+    }),
+
+    reviewAdd: builder.mutation({
+      query: (query) => ({
+        url: `/reviews/${query.id}`,
+        body: query.body,
+        method: 'PATCH',
+        headers: {
+          Authorization: query.token
+        }
+      }),
+      invalidatesTags: ['Product']
+    }),
+
+    addProduct: builder.mutation({
+      query: (query) => ({
+        url: '/',
+        body: query.body,
+        method: 'POST',
+        headers: {
+          Authorization: query.token
+        }
+      }),
+      invalidatesTags: ['Product']
+    }),
+
+    removeProduct: builder.mutation({
+      query: (query) => ({
+        url: `/${query.id}`,
+        params: {
+          imagePath: query.imagePath
+        },
+        method: 'DELETE',
+        headers: {
+          Authorization: query.token
+        }
+      }),
+      invalidatesTags: ['Product']
+    }),
+
 
 
 
@@ -38,4 +103,4 @@ export const productApi = createApi({
 });
 
 
-export const { useGetProductsQuery, useGetProductByIdQuery, useGetTopProductsQuery } = productApi;
+export const { useGetProductsQuery, useGetProductByIdQuery, useGetTopProductsQuery, useAddProductMutation, useUpdateProductMutation, useRemoveProductMutation, useReviewAddMutation, useSearchProductsQuery } = productApi;

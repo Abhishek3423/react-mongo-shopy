@@ -1,25 +1,19 @@
 import React from 'react'
-import { useGetProductsQuery } from '../shared/productApi'
-import { Button, Card, CardBody, CardFooter, CardHeader, Typography } from '@material-tailwind/react';
-import Cara from './Cara';
-import { useNavigate } from 'react-router';
+import { useNavigate, useParams } from 'react-router'
+import { useSearchProductsQuery } from '../shared/productApi';
 import { imageUrl } from '../../constants/constants';
-import Spinner from '../../ui/Spinner';
+import { Button, Card, CardBody, CardFooter, CardHeader, Typography } from '@material-tailwind/react';
 
-const Home = () => {
-  const { data, isLoading, error } = useGetProductsQuery();
-
+const SearchPage = () => {
+  const { query } = useParams();
   const nav = useNavigate();
-
+  const { data, isLoading } = useSearchProductsQuery(query);
   if (isLoading) {
-    return <Spinner />;
+    return <h1>Loading.....</h1>
   }
-
-
-
   return (
-    <div className='px-5'>
-      <Cara />
+    <div className='px-5 py-5'>
+
       <div className=' grid grid-cols-3 gap-5 items-start '>
 
         {data?.data.map(({ _id, product_name, product_detail, product_image }) => {
@@ -52,4 +46,4 @@ const Home = () => {
   )
 }
 
-export default Home
+export default SearchPage

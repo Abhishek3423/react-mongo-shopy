@@ -5,7 +5,11 @@ import { userUrl } from '../../constants/constants';
 export const userApi = createApi({
   reducerPath: 'userApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: userUrl
+    baseUrl: userUrl,
+    credentials: 'include',
+    headers: {
+      'Accept': 'application/json'
+    }
   }),
 
 
@@ -27,10 +31,21 @@ export const userApi = createApi({
       })
     }),
 
+    userUpdate: builder.mutation({
+      query: (query) => ({
+        url: `/profile/${query.id}`,
+        body: query.body,
+        method: 'PATCH',
+        headers: {
+          Authorization: query.token
+        }
+      })
+    }),
+
 
 
   }),
 });
 
 
-export const { useUserLoginMutation, useUserRegisterMutation } = userApi;
+export const { useUserLoginMutation, useUserRegisterMutation, useUserUpdateMutation } = userApi;

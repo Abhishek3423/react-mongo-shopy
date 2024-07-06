@@ -10,7 +10,7 @@ import { useFormik } from 'formik';
 import { useUserLoginMutation } from './userApi';
 import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
-import { addUser } from './userSlice';
+import { setUser } from './userSlice';
 
 const Login = () => {
 
@@ -26,10 +26,10 @@ const Login = () => {
     onSubmit: async (val) => {
       try {
         const response = await loginUser(val).unwrap();
-        console.log(response);
-        dispatch(addUser(response));
-        toast.success('successfully login');
-        nav(-1);
+        // console.log(response);
+        // dispatch(setUser(response));
+        // toast.success('successfully login');
+        // nav(-1);
       } catch (err) {
         toast.error(err.data?.message);
       }

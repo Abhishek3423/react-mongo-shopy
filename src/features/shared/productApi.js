@@ -32,7 +32,7 @@ export const productApi = createApi({
 
     getTopProducts: builder.query({
       query: () => ({
-        url: '/top_products',
+        url: '/',
         method: 'GET'
       }),
       providesTags: ['Product']
